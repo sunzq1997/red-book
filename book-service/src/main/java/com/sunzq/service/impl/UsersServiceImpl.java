@@ -57,4 +57,10 @@ public class UsersServiceImpl implements UsersService {
         usersMapper.insert(user);
         return user;
     }
+
+    @Override
+    public Users getUserById(String userId) {
+        Users user = usersMapper.selectById(userId);
+        return user;
+    }
 }

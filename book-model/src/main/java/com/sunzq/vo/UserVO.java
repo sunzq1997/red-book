@@ -28,4 +28,8 @@ public class UserVO {
     private LocalDateTime updatedTime;
 
     private String token;
+
+    private Integer myFollowsCounts;
+    private Integer myFansCounts;
+    private Integer totalLikeMeCounts;
 }

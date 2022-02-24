@@ -50,7 +50,7 @@ public class PassportController extends BaseInfoProperties {
         String ip = IPUtil.getRequestIp(request);
         redis.setnx60s(MOBILE_SMSCODE + ":" + ip, ip);
         String code = (int) ((Math.random() * 9 + 1) * 100000) + "";
-        sendSMSUtil.sendSMS(mobile, code);
+        //sendSMSUtil.sendSMS(mobile, code);
         redis.set(MOBILE_SMSCODE + ":" + mobile, code, 30 * 60);
 
         return GraceJSONResult.ok();
@@ -75,7 +75,7 @@ public class PassportController extends BaseInfoProperties {
         redis.del(MOBILE_SMSCODE + ":" + mobile);
 
         String token = UUID.randomUUID().toString();
-        redis.set(USER_REDIS_TOEKN + ":" + user.getId(), token);
+        redis.set(USER_REDIS_TOKEN + ":" + user.getId(), token);
 
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
@@ -85,7 +85,7 @@ public class PassportController extends BaseInfoProperties {
 
     @PostMapping("logout")
     public GraceJSONResult logout(@RequestParam String userId) {
-        redis.del(USER_REDIS_TOEKN + ":" + userId);
+        redis.del(USER_REDIS_TOKEN + ":" + userId);
         return GraceJSONResult.ok();
     }
 }

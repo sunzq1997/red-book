@@ -26,4 +26,11 @@ public interface UsersService {
      * @return
      */
     Users register(String mobile);
+
+    /**
+     * 通过用户id获取用户信息
+     * @param userId
+     * @return
+     */
+    Users getUserById(String userId);
 }
