@@ -3,7 +3,7 @@ server:
 
 
 spring:
-  datasource:                                     # 数据源的相关配置
+  datasource: # 数据源的相关配置
     type: com.zaxxer.hikari.HikariDataSource      # 数据源的类型，可以更改为其他的数据源配置，比如druid
     driver-class-name: com.mysql.cj.jdbc.Driver      # mysql/MariaDB 的数据库驱动类名称
     url: jdbc:mysql://localhost:3306/red_book?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
@@ -18,3 +18,9 @@ spring:
       pool-name: DataSourceHikariCP           # 连接池的名字
       max-lifetime: 18000000                  # 连接池的最大生命时长（毫秒），超时则会被释放（retired）
       connection-test-query: SELECT 1
+
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
