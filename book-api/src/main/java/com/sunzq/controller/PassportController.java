@@ -82,4 +82,10 @@ public class PassportController extends BaseInfoProperties {
         userVO.setToken(token);
         return GraceJSONResult.ok(userVO);
     }
+
+    @PostMapping("logout")
+    public GraceJSONResult logout(@RequestParam String userId) {
+        redis.del(USER_REDIS_TOEKN + ":" + userId);
+        return GraceJSONResult.ok();
+    }
 }
