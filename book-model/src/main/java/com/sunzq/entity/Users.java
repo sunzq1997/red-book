@@ -1,10 +1,13 @@
 package com.sunzq.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * <p>
@@ -20,6 +23,7 @@ public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**

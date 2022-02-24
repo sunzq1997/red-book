@@ -11,4 +11,5 @@ public class BaseInfoProperties {
     @Autowired
     public RedisOperator redis;
     public static final String MOBILE_SMSCODE = "mobile:smscode";
+    public static final String USER_REDIS_TOEKN = "user:token";
 }
