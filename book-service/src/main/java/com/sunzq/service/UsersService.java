@@ -1,5 +1,6 @@
 package com.sunzq.service;
 
+import com.sunzq.bo.UpdateUserInfoBO;
 import com.sunzq.entity.Users;
 
 /**
@@ -33,4 +34,11 @@ public interface UsersService {
      * @return
      */
     Users getUserById(String userId);
+
+    /**
+     * 修改用户信息
+     * @param updateUserInfoBO,type
+     * @return
+     */
+    Users updateUserInfo(UpdateUserInfoBO updateUserInfoBO,Integer type);
 }

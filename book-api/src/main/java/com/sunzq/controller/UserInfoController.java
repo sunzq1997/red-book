@@ -1,6 +1,7 @@
 package com.sunzq.controller;
 
 import com.sunzq.GraceJSONResult;
+import com.sunzq.bo.UpdateUserInfoBO;
 import com.sunzq.entity.Users;
 import com.sunzq.service.UsersService;
 import com.sunzq.vo.UserVO;
@@ -8,15 +9,12 @@ import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author sunzq
  */
-@Api(tags = "用户信息控制器")
+@Api(tags = "用户信息接口")
 @RequestMapping("/userInfo")
 @RestController
 public class UserInfoController extends BaseInfoProperties {
@@ -61,4 +59,10 @@ public class UserInfoController extends BaseInfoProperties {
         return GraceJSONResult.ok(userVO);
     }
 
+    @PostMapping("modifyUserInfo")
+    public GraceJSONResult modifyUserInfo(@RequestBody UpdateUserInfoBO userInfoBO, @RequestParam Integer type) {
+        Users user = usersService.updateUserInfo(userInfoBO, type);
+
+        return GraceJSONResult.ok(user);
+    }
 }
