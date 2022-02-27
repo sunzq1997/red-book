@@ -98,6 +98,7 @@ public class UsersServiceImpl implements UsersService {
         return updateUserInfo(userInfoBO);
     }
 
+    @Override
     @Transactional
     public Users updateUserInfo(UpdateUserInfoBO userInfoBO) {
         Users user = new Users();

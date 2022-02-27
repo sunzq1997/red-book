@@ -40,5 +40,12 @@ public interface UsersService {
      * @param updateUserInfoBO,type
      * @return
      */
+    Users updateUserInfo(UpdateUserInfoBO updateUserInfoBO);
+
+    /**
+     * 修改用户信息
+     * @param updateUserInfoBO,type
+     * @return
+     */
     Users updateUserInfo(UpdateUserInfoBO updateUserInfoBO,Integer type);
 }

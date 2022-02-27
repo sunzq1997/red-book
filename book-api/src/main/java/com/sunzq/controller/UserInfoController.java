@@ -1,15 +1,20 @@
 package com.sunzq.controller;
 
 import com.sunzq.GraceJSONResult;
+import com.sunzq.ResponseStatusEnum;
 import com.sunzq.bo.UpdateUserInfoBO;
+import com.sunzq.config.MinioConfig;
 import com.sunzq.entity.Users;
+import com.sunzq.enums.FileTypeEnum;
 import com.sunzq.service.UsersService;
+import com.sunzq.utils.MinioUtils;
 import com.sunzq.vo.UserVO;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author sunzq
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserInfoController extends BaseInfoProperties {
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private MinioConfig minioConfig;
 
     @GetMapping("query")
     public GraceJSONResult getUser(@RequestParam String userId) {
@@ -62,6 +69,30 @@ public class UserInfoController extends BaseInfoProperties {
     @PostMapping("modifyUserInfo")
     public GraceJSONResult modifyUserInfo(@RequestBody UpdateUserInfoBO userInfoBO, @RequestParam Integer type) {
         Users user = usersService.updateUserInfo(userInfoBO, type);
+
+        return GraceJSONResult.ok(user);
+    }
+
+    @PostMapping("modifyImage")
+    public GraceJSONResult modifyImage(@RequestParam String userId, @RequestParam Integer type,
+                                       MultipartFile file) throws Exception {
+        if (!type.equals(FileTypeEnum.FACE.type) && !type.equals(FileTypeEnum.BGIMG.type)) {
+            return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_FAILD);
+        }
+
+        String filename = file.getOriginalFilename();
+        MinioUtils.uploadFile(minioConfig.getBucketName(), filename, file.getInputStream());
+        String url = minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + filename;
+
+        UpdateUserInfoBO userInfoBO = new UpdateUserInfoBO();
+        userInfoBO.setId(userId);
+        if (type.equals(FileTypeEnum.FACE.type)) {
+            userInfoBO.setFace(url);
+        }
+        if (type.equals(FileTypeEnum.BGIMG.type)) {
+            userInfoBO.setBgImg(url);
+        }
+        Users user = usersService.updateUserInfo(userInfoBO);
 
         return GraceJSONResult.ok(user);
     }
